@@ -5,6 +5,7 @@ import 'theme/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'providers/settings_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'screens/auth/login_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,9 +37,8 @@ class MyApp extends StatelessWidget {
       // Translates built-in widgets (buttons, dates) and flips layout to RTL
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       debugShowCheckedModeBanner: false,
-      home: const Scaffold(
-        body: Center(child: Text('Inventory App')),
-      ),
+      // First screen shown when the app starts
+      home: const LoginScreen(),
     );
   }
 }
