@@ -1,3 +1,4 @@
+import 'l10n/app_strings.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
@@ -34,8 +35,11 @@ class MyApp extends StatelessWidget {
       locale: settings.locale,
       // Languages the app supports: Arabic and English
       supportedLocales: const [Locale('ar'), Locale('en')],
-      // Translates built-in widgets (buttons, dates) and flips layout to RTL
-      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      // Translates built-in widgets (buttons, dates) and flips layout to RTL and our texts
+      localizationsDelegates: [
+        const AppStringsDelegate(),
+        ...GlobalMaterialLocalizations.delegates
+      ],
       debugShowCheckedModeBanner: false,
       // First screen shown when the app starts
       home: const LoginScreen(),
