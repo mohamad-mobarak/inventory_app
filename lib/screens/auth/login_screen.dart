@@ -73,6 +73,18 @@ class _LoginScreenState extends State<LoginScreen> {
         });
         return;
       }
+      // Check if the account is active
+      final isActive = await _authService.isUserActive(credential.user!.uid);
+
+      if (!isActive) {
+        await _authService.signOut();
+        if (!mounted) return;
+        setState(() {
+          _bannerError = AppStrings.of(context).accountDisabled;
+          _fieldError = null;
+        });
+        return;
+      }
 
       // Open the temporary page that matches the user's role
       Navigator.pushReplacement(
@@ -252,7 +264,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(20)),
                 ),
                 child: Text(AppStrings.of(context).login,
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
                 // Runs the login function when the button is pressed
                 onPressed: _login,
               ),

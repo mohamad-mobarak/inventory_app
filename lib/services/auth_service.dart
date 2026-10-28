@@ -58,6 +58,21 @@ class AuthService {
     return doc.data()?['role'] as String?;
   }
 
+  // Check if the user account is active
+  Future<bool> isUserActive(String uid) async {
+    final doc = await _db.collection('users').doc(uid).get();
+    // If no document exists, treat the user as not active
+    if (!doc.exists) {
+      return false;
+    }
+    // Return isActive, or false if the field is missing
+    return doc.data()?['isActive'] as bool? ?? false;
+  }
+
+  Future<void> signOut() async {
+    await _auth.signOut();
+  }
+
   // Check if sign up is still open
   Future<bool> isSignUpOpen() async {
     final doc = await _db.collection('settings').doc('setup').get();

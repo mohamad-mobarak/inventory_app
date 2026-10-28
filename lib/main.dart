@@ -1,3 +1,5 @@
+import 'package:inventory_app/screens/auth/auth_gate.dart';
+
 import 'l10n/app_strings.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,6 @@ import 'theme/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'providers/settings_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'screens/auth/login_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       // First screen shown when the app starts
-      home: const LoginScreen(),
+      home: AuthGate(),
     );
   }
 }

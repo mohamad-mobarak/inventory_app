@@ -22,10 +22,10 @@ class AppStrings {
       ? 'البريد الالكتروني او كلمة السر غير صحيحة'
       : 'Incorrect email or password.';
   String get accountDisabled => locale.languageCode == 'ar'
-      ? 'هذا الحساب معطلز يرجى التواصل مع المدير'
+      ? 'هذا الحساب معطل يرجى التواصل مع المدير'
       : 'This account is disabled. Plese contact the manager';
   String get accountNotRegistered => locale.languageCode == 'ar'
-      ? 'هذا الحساب غير مسجل لدى الحل'
+      ? 'هذا الحساب غير مسجل لدى المحل'
       : 'This account is not registered with this shop';
   // Lable of the button that switches to the other language
   String get switchLanguage => locale.languageCode == 'ar' ? 'English' : 'عربي';
@@ -79,6 +79,36 @@ class AppStrings {
   String get signUpFailed => locale.languageCode == 'ar'
       ? 'حدث خطأ غير متوقع، جرّب مرة أخرى'
       : 'An unexpected error occurred, try again';
+  String get sellers => locale.languageCode == 'ar' ? 'البائعون' : 'Sellers';
+  String get addSeller =>
+      locale.languageCode == 'ar' ? 'إضافة بائع' : 'Add seller';
+  String get sellerActive => locale.languageCode == 'ar' ? 'فعّال' : 'Active';
+  String get sellerDisabled =>
+      locale.languageCode == 'ar' ? 'معطّل' : 'Disabled';
+  String get sellerName =>
+      locale.languageCode == 'ar' ? 'اسم البائع' : 'Seller name';
+  String get passwordMinHint => locale.languageCode == 'ar'
+      ? '6 أحرف على الأقل'
+      : 'At least 6 characters';
+  String get createSellerAccount => locale.languageCode == 'ar'
+      ? 'إنشاء حساب البائع'
+      : 'Create seller account';
+  String get sellerDetails =>
+      locale.languageCode == 'ar' ? 'تفاصيل البائع' : 'Seller details';
+  String get accountActive =>
+      locale.languageCode == 'ar' ? 'الحساب فعّال' : 'Account active';
+  String get saveChanges =>
+      locale.languageCode == 'ar' ? 'حفظ التعديلات' : 'Save changes';
+  String get viewSellerSales =>
+      locale.languageCode == 'ar' ? 'عرض مبيعات البائع' : 'View seller sales';
+  String get nameRequired =>
+      locale.languageCode == 'ar' ? 'الاسم مطلوب' : 'Name is required';
+  String get loasFailed => locale.languageCode == 'ar'
+      ? 'تعذّر تحميل البينات'
+      : 'Could not load data';
+  String get saveFailed => locale.languageCode == 'ar'
+      ? 'تعذّر حفظ التعديلات'
+      : 'Could not save change';
 }
 
 // Tells Flutter how to load AppStrings
