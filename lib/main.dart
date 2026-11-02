@@ -1,5 +1,4 @@
 import 'package:inventory_app/screens/auth/auth_gate.dart';
-
 import 'l10n/app_strings.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

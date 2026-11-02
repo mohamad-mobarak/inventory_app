@@ -109,6 +109,82 @@ class AppStrings {
   String get saveFailed => locale.languageCode == 'ar'
       ? 'تعذّر حفظ التعديلات'
       : 'Could not save change';
+  String get products => locale.languageCode == 'ar' ? 'المنتجات' : 'Products';
+  String get noProducts =>
+      locale.languageCode == 'ar' ? 'لا توجد منتجات' : 'No products yet';
+  String get available => locale.languageCode == 'ar' ? 'متوفر' : 'In stock';
+  String get lowStock => locale.languageCode == 'ar' ? 'منخفض' : 'Low';
+  String get outOfStock =>
+      locale.languageCode == 'ar' ? 'نفد المخزون' : 'Out of stock';
+  String get quantity => locale.languageCode == 'ar' ? 'الكمية' : 'Quantity';
+  String get inventorySystem => locale.languageCode == 'ar'
+      ? 'نظام إدارة المخزون'
+      : 'Inventory Management';
+  String get productName =>
+      locale.languageCode == 'ar' ? 'اسم المنتج' : 'Product name';
+  String get salePrice =>
+      locale.languageCode == 'ar' ? 'سعر البيع' : 'Sale price';
+  String get purchasePrice =>
+      locale.languageCode == 'ar' ? 'سعر الشراء' : 'Purchase price';
+  String get lowStockThreshold =>
+      locale.languageCode == 'ar' ? 'حد التنبيه' : 'Low stock alert at';
+  String get category => locale.languageCode == 'ar' ? 'الفئة' : 'Category';
+  String get newCategoryName =>
+      locale.languageCode == 'ar' ? 'اسم الفئة الجديدة' : 'New category name';
+  String get addNewProduct =>
+      locale.languageCode == 'ar' ? 'إضافة منتج جديد' : 'Add new product';
+  String get enterProductName =>
+      locale.languageCode == 'ar' ? 'أدخل اسم المنتج' : 'Enter product name';
+  String get chooseCategory =>
+      locale.languageCode == 'ar' ? 'اختر التصنيف' : 'Choose category';
+  String get addNewCategory =>
+      locale.languageCode == 'ar' ? 'إضافة تصنيف جديد' : 'Add new category';
+  String get adminOnly =>
+      locale.languageCode == 'ar' ? '(للمدير فقط)' : '(Admin only)';
+  String get saveProduct =>
+      locale.languageCode == 'ar' ? 'حفظ المنتج' : 'Save product';
+  String get cancel => locale.languageCode == 'ar' ? 'إلغاء' : 'Cancel';
+  String get editProduct =>
+      locale.languageCode == 'ar' ? 'تعديل المنتج' : 'Edit product';
+  String get currentQuantity =>
+      locale.languageCode == 'ar' ? 'الكمية الحالية' : 'Current quantity';
+  String get addQuantity =>
+      locale.languageCode == 'ar' ? 'إضافة كمية' : 'Add quantity';
+  String get correctQuantity =>
+      locale.languageCode == 'ar' ? 'تصحيح الكمية' : 'Correct quantity';
+  String get hideProduct =>
+      locale.languageCode == 'ar' ? 'إخفاء المنتج' : 'Hide product';
+  String get hideProductHint => locale.languageCode == 'ar'
+      ? 'المنتج المخفي ما بيظهر بالقائمة '
+      : 'A hidden product no longer appears in the list';
+  // Validation messages for the add/edit product screens
+  String get invalidSalePrice => locale.languageCode == 'ar'
+      ? 'أدخل سعر بيع أكبر من صفر'
+      : 'Enter a sale price greater than zero';
+  String get invalidPurchasePrice => locale.languageCode == 'ar'
+      ? 'أدخل سعر شراء أكبر من صفر'
+      : 'Enter a purchase price greater than zero';
+  String get invalidQuantity => locale.languageCode == 'ar'
+      ? 'أدخل كمية صحيحة (صفر أو أكثر)'
+      : 'Enter a valid quantity (0 or more)';
+  String get invalidThreshold => locale.languageCode == 'ar'
+      ? 'أدخل حد تنبيه صحيح (صفر أو أكثر)'
+      : 'Enter a valid alert limit (0 or more)';
+  String get enterCategoryName => locale.languageCode == 'ar'
+      ? 'أدخل اسم الفئة الجديدة'
+      : 'Enter the new category name';
+  String get productNameExists => locale.languageCode == 'ar'
+      ? 'اسم المنتج موجود مسبقاً'
+      : 'A product with this name already exists';
+  String get couldNotSaveProduct => locale.languageCode == 'ar'
+      ? 'تعذر حفظ المنتج'
+      : 'Could not save the product';
+  String get editQuantity =>
+      locale.languageCode == 'ar' ? 'تعديل الكمية' : 'Edit quantity';
+  String get confirm => locale.languageCode == 'ar' ? 'تأكيد' : 'Confirm';
+  String get couldNotHide => locale.languageCode == 'ar'
+      ? 'تعذر  اخفاء المنتج'
+      : 'Could not hide the product';
 }
 
 // Tells Flutter how to load AppStrings

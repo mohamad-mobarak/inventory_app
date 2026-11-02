@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:inventory_app/services/auth_service.dart';
@@ -8,7 +6,7 @@ import '../../providers/settings_provider.dart';
 import '../../l10n/app_strings.dart';
 import '../../theme/app_theme.dart';
 import '../../services/auth_service.dart';
-import '../../screens/home/temp_home_screen.dart';
+import '../../screens/home/main_shell.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -152,7 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // Replace the sign up screen with the home screen
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (_) => const TempHomeScreen(title: 'Admin')),
+        MaterialPageRoute(builder: (_) => const MainShell(isAdmin: true)),
         (route) => false,
       );
     } on FirebaseAuthException catch (e) {

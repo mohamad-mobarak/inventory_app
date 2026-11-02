@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:inventory_app/screens/home/main_shell.dart';
 import 'package:provider/provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../l10n/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:inventory_app/theme/app_theme.dart';
 import '../../services/auth_service.dart';
-import '../../screens/home/temp_home_screen.dart';
 import '../../screens/auth/sign_up_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -90,8 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (_) =>
-                  TempHomeScreen(title: role == 'admin' ? 'Admin' : 'Seller')));
+            builder: (_) => MainShell(isAdmin: role == 'admin'),
+          ));
     } on FirebaseAuthException catch (e) {
       // Show the wrong credentials error under the fields
       setState(() {

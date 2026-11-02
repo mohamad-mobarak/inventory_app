@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // Firebase Auth to know if a user is already signed in
 // فايربيس أوث لنعرف إذا في مستخدم مسجّل دخول
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:inventory_app/screens/home/main_shell.dart';
+import 'package:inventory_app/screens/products/products_screen.dart';
 // Our service that talks to Firebase
 // السيرفس تبعنا اللي بتحكي مع فايربيس
 import '../../services/auth_service.dart';
@@ -59,9 +61,11 @@ class _AuthGateState extends State<AuthGate> {
       await _authService.signOut();
       return LoginScreen();
     }
+    // Get the user's role
+    final role = await _authService.getUserRole(user.uid);
     // Active account: open the home page
     // حساب فعّال: منفتح الصفحة الرئيسية
-    return SellersScreen();
+    return MainShell(isAdmin: role == 'admin');
   }
 
   @override
