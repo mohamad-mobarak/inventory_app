@@ -8,11 +8,42 @@ import '../../models/product.dart';
 import 'edit_product_screen.dart';
 
 // Products list screen (isAdmin: true = admin, false = seller)
-class ProductsScreen extends StatelessWidget {
+class ProductsScreen extends StatefulWidget {
   final bool isAdmin;
+
+  const ProductsScreen({super.key, required this.isAdmin});
+
+  // Creates the state object that keeps the search text
+  @override
+  State<ProductsScreen> createState() => _ProductsScreenState();
+}
+
+class _ProductsScreenState extends State<ProductsScreen> {
+  // Service used to read products from Firestore
   final _productService = ProductService();
 
-  ProductsScreen({super.key, required this.isAdmin});
+  // Controls the text inside the search box
+  final TextEditingController _searchController = TextEditingController();
+
+  // Holds the text the user typed in the search box
+  String _searchQuery = '';
+
+  // Holds the products stream so it is created only once
+  late final Stream<List<Product>> _productsStream;
+
+  // Creates the products stream one time when the screen opens
+  @override
+  void initState() {
+    super.initState();
+    _productsStream = _productService.getProducts();
+  }
+
+  // Frees the search controller when the screen closes
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   // Returns a rounded status badge: in stock (green), low (orange), out (red)
   Widget _buildBadge(AppStrings s, int quantity, int threshold) {
@@ -64,7 +95,7 @@ class ProductsScreen extends StatelessWidget {
       ),
       child: InkWell(
         // Tap to edit: admin only
-        onTap: isAdmin
+        onTap: widget.isAdmin
             ? () {
                 Navigator.push(
                     context,
@@ -129,8 +160,31 @@ class ProductsScreen extends StatelessWidget {
               // Status badge
               _buildBadge(s, p.quantity, p.lowStockThreshold),
               // Arrow: admin only (means the card opens the edit screen)
-              if (isAdmin) const Icon(Icons.chevron_right),
+              if (widget.isAdmin) const Icon(Icons.chevron_right),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Builds the search box that filters the products by name
+  Widget _buildSearchField(AppStrings s) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      child: TextField(
+        controller: _searchController,
+        // Saves the typed text and rebuilds the list
+        onChanged: (value) {
+          setState(() {
+            _searchQuery = value;
+          });
+        },
+        decoration: InputDecoration(
+          hintText: s.searchProductHint,
+          prefixIcon: const Icon(Icons.search),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
       ),
@@ -145,8 +199,6 @@ class ProductsScreen extends StatelessWidget {
     return Scaffold(
       // Top bar: logo, app name, screen name, and a menu icon
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Colors.white,
         toolbarHeight: 72,
         leadingWidth: 72,
         // Logo inside a white rounded box (right side in Arabic)
@@ -178,7 +230,7 @@ class ProductsScreen extends StatelessWidget {
         ),
       ),
       // + button: admin only
-      floatingActionButton: isAdmin
+      floatingActionButton: widget.isAdmin
           ? FloatingActionButton(
               backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Colors.white,
@@ -191,31 +243,45 @@ class ProductsScreen extends StatelessWidget {
               child: const Icon(Icons.add),
             )
           : null,
-      // Empty message, or the list of products
-      body: StreamBuilder<List<Product>>(
-        stream: _productService.getProducts(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(s.loasFailed),
-            );
-          }
-          final products =
-              (snapshot.data ?? []).where((p) => p.isActive).toList();
-          if (products.isEmpty) {
-            return Center(child: Text(s.noProducts));
-          }
-          return ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: products.length,
-            itemBuilder: (context, index) {
-              return _buildProductCard(context, s, products[index]);
-            },
-          );
-        },
+      // Search box on top, then the list of products under it
+      body: Column(
+        children: [
+          _buildSearchField(s),
+          // Empty message, or the filtered list of products
+          Expanded(
+            child: StreamBuilder<List<Product>>(
+              stream: _productsStream,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(s.loasFailed),
+                  );
+                }
+                final query = _searchQuery.trim().toLowerCase();
+                final products = (snapshot.data ?? [])
+                    .where((p) =>
+                        p.isActive && p.name.toLowerCase().contains(query))
+                    .toList();
+                if (products.isEmpty) {
+                  return Center(
+                    child:
+                        Text(query.isEmpty ? s.noProducts : s.noSearchResults),
+                  );
+                }
+                return ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    return _buildProductCard(context, s, products[index]);
+                  },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

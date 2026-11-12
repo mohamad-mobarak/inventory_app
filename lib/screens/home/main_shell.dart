@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_app/l10n/app_strings.dart';
 import '../products/products_screen.dart';
+import '../sales/sell_screen.dart';
 import '../sellers/sellers_screen.dart';
 
 class MainShell extends StatefulWidget {
@@ -17,37 +18,55 @@ class _MainShellState extends State<MainShell> {
   Widget build(BuildContext context) {
     // Screen list depends on the user's role
     final List<Widget> screens = widget.isAdmin
-        ? [ProductsScreen(isAdmin: true), const SellersScreen()]
-        : [ProductsScreen(isAdmin: false)];
+        ? [
+            ProductsScreen(isAdmin: true),
+            const SellersScreen(),
+            SellScreen(
+              isAdmin: true,
+            ),
+          ]
+        : [
+            ProductsScreen(isAdmin: false),
+            SellScreen(
+              isAdmin: false,
+            ),
+          ];
     return Scaffold(
-      body: screens[_currentIndex],
-      bottomNavigationBar: (screens.length > 1)
-          ? NavigationBar(
-              selectedIndex: _currentIndex,
-              onDestinationSelected: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-              destinations: widget.isAdmin
-                  ? [
-                      NavigationDestination(
-                        icon: Icon(Icons.inventory_2),
-                        label: AppStrings.of(context).products,
-                      ),
-                      NavigationDestination(
-                        icon: Icon(Icons.people),
-                        label: AppStrings.of(context).sellers,
-                      ),
-                    ]
-                  : [
-                      NavigationDestination(
-                        icon: Icon(Icons.inventory_2),
-                        label: AppStrings.of(context).products,
-                      ),
-                    ],
-            )
-          : null,
+      // Keeps every screen alive and shows only the selected one.
+      body: IndexedStack(index: _currentIndex, children: screens),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _currentIndex,
+        onDestinationSelected: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        destinations: widget.isAdmin
+            ? [
+                NavigationDestination(
+                  icon: Icon(Icons.inventory_2),
+                  label: AppStrings.of(context).products,
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.people),
+                  label: AppStrings.of(context).sellers,
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.shopping_cart),
+                  label: AppStrings.of(context).sellTab,
+                ),
+              ]
+            : [
+                NavigationDestination(
+                  icon: Icon(Icons.inventory_2),
+                  label: AppStrings.of(context).products,
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.shopping_cart),
+                  label: AppStrings.of(context).sellTab,
+                ),
+              ],
+      ),
     );
   }
 }

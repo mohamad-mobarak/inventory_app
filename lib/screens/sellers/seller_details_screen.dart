@@ -3,6 +3,7 @@ import '../../models/app_user.dart';
 import '../../services/seller_service.dart';
 import '../../theme/app_theme.dart';
 import '../../l10n/app_strings.dart';
+import '../sales/sales_history_screen.dart';
 
 class SellerDetailsScreen extends StatefulWidget {
   final AppUser seller;
@@ -167,7 +168,16 @@ class _SellerDetailsScreenState extends State<SellerDetailsScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                   ),
-                  onPressed: () {},
+                  // Opens the sales history screen filtered to this seller
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SalesHistoryScreen(
+                                  isAdmin: true,
+                                  sellerId: widget.seller.id,
+                                )));
+                  },
                   child: Text(s.viewSellerSales),
                 ),
               ),

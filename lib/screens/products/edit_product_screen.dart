@@ -398,8 +398,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
     return Scaffold(
       // Green top bar with the back arrow (added automatically)
       appBar: AppBar(
-        backgroundColor: primary,
-        foregroundColor: Colors.white,
         title: Text(s.editProduct),
       ),
       body: SingleChildScrollView(

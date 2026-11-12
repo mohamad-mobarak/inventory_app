@@ -185,6 +185,115 @@ class AppStrings {
   String get couldNotHide => locale.languageCode == 'ar'
       ? 'تعذر  اخفاء المنتج'
       : 'Could not hide the product';
+  String get sellTab => locale.languageCode == 'ar' ? 'البيع' : 'Sell';
+  // Texts used by the sell screen and the cart sheet.
+  String get cartTitle => locale.languageCode == 'ar' ? 'السلة' : 'Cart';
+  String get cartEmptyHint =>
+      locale.languageCode == 'ar' ? 'أضف منتجات' : 'Add products';
+  String get unitPrice => locale.languageCode == 'ar' ? 'السعر' : 'Price';
+  String get cartTotalPrice =>
+      locale.languageCode == 'ar' ? 'إجمالي السعر' : 'Total price';
+  String get confirmSale =>
+      locale.languageCode == 'ar' ? 'تأكيد البيع' : 'Confirm sale';
+  String get availableLabel =>
+      locale.languageCode == 'ar' ? 'المتوفر' : 'Available';
+  String get searchProductHint =>
+      locale.languageCode == 'ar' ? 'ابحث عن منتج' : 'Search for a product';
+  String get errorLabel => locale.languageCode == 'ar' ? 'خطأ' : 'Error';
+  String get piecesLabel => locale.languageCode == 'ar' ? 'قطع' : 'items';
+  String get viewCart =>
+      locale.languageCode == 'ar' ? 'عرض السلة' : 'View cart';
+
+// Builds the stock-limit message with the available quantity.
+  String availableQuantityOnly(int quantity) => locale.languageCode == 'ar'
+      ? 'الكمية المتوفرة فقط $quantity من هذا المنتج'
+      : 'Only $quantity available of this product';
+  // Holds the messages shown after confirming a sale.
+  String get saleSuccess => locale.languageCode == 'ar'
+      ? 'تمت عملية البيع بنجاح'
+      : 'Sale completed successfully';
+  String get genericError => locale.languageCode == 'ar'
+      ? 'تعذّر إتمام العملية، حاول مرة ثانية'
+      : 'Could not complete the operation, please try again';
+  String get cartProductUnavailable => locale.languageCode == 'ar'
+      ? 'منتج بالسلة صار غير متوفر'
+      : 'A product in your cart is no longer available';
+  String get stockChanged => locale.languageCode == 'ar'
+      ? 'المخزون تغيّر، راجع الكميات'
+      : 'Stock has changed, please review the quantities';
+  // Returns the label of the sales history button.
+  String get salesHistory =>
+      locale.languageCode == 'ar' ? 'سجل المبيعات' : 'Sales history';
+  // Returns the label of a completed sale.
+  String get saleCompleted =>
+      locale.languageCode == 'ar' ? 'مكتملة' : 'Completed';
+
+  // Returns the label of a cancelled sale.
+  String get saleCancelled =>
+      locale.languageCode == 'ar' ? 'ملغاة' : 'Cancelled';
+
+  // Returns the label shown before a total amount.
+  String get totalLabel => locale.languageCode == 'ar' ? 'المجموع' : 'Total';
+
+  // Returns the label shown before the seller name.
+  String get sellerLabel => locale.languageCode == 'ar' ? 'البائع' : 'Seller';
+
+  // Returns the label of the sale details button.
+  String get viewDetails =>
+      locale.languageCode == 'ar' ? 'عرض التفاصيل' : 'View details';
+
+  // Returns the message shown when there are no sales.
+  String get noSalesYet =>
+      locale.languageCode == 'ar' ? 'لا توجد مبيعات بعد' : 'No sales yet';
+  // Labels for the sale details screen
+  String get saleDetailsTitle =>
+      locale.languageCode == 'ar' ? 'تفاصيل البيعة' : 'Sale details';
+  String get statusLabel => locale.languageCode == 'ar' ? 'الحالة' : 'Status';
+  String get dateLabel => locale.languageCode == 'ar' ? 'التاريخ' : 'Date';
+  String get quantityLabel =>
+      locale.languageCode == 'ar' ? 'العدد' : 'Quantity';
+  String get pricePerPiece =>
+      locale.languageCode == 'ar' ? 'سعر القطعة' : 'Price per piece';
+  String get lineTotalLabel =>
+      locale.languageCode == 'ar' ? 'الإجمالي' : 'Total';
+  String get cancelSaleButton =>
+      locale.languageCode == 'ar' ? 'إلغاء العملية' : 'Cancel sale';
+  String get cancelledByLabel =>
+      locale.languageCode == 'ar' ? 'ألغيت بواسطة:' : 'Cancelled by:';
+  // Returns the label for hours before noon.
+  String get amLabel => locale.languageCode == 'ar' ? 'ص' : 'AM';
+
+  // Returns the label for hours after noon.
+  String get pmLabel => locale.languageCode == 'ar' ? 'م' : 'PM';
+
+  // Title of the cancel sale dialog
+  String get cancelSaleDialogTitle =>
+      locale.languageCode == 'ar' ? 'إلغاء العملية؟' : 'Cancel this sale?';
+
+  // Message of the cancel sale dialog
+  String get cancelSaleDialogMessage => locale.languageCode == 'ar'
+      ? 'سيتم إرجاع المنتجات إلى المخزون.'
+      : 'The products will be returned to stock.';
+
+  // Label of the button that closes the dialog without cancelling
+  String get keepSaleButton =>
+      locale.languageCode == 'ar' ? 'رجوع' : 'Keep sale';
+
+  // Message shown after the sale is cancelled
+  String get saleCancelledSuccess =>
+      locale.languageCode == 'ar' ? 'تم إلغاء العملية' : 'Sale cancelled';
+
+  // Error shown when the sale document does not exist
+  String get saleNotFoundError =>
+      locale.languageCode == 'ar' ? 'العملية غير موجودة' : 'Sale not found';
+
+  // Error shown when the sale was already cancelled
+  String get alreadyCancelledError => locale.languageCode == 'ar'
+      ? 'العملية ملغاة مسبقاً'
+      : 'This sale is already cancelled';
+  String get noSearchResults => locale.languageCode == 'ar'
+      ? 'لا توجد نتائج مطابقة'
+      : 'No matching results';
 }
 
 // Tells Flutter how to load AppStrings

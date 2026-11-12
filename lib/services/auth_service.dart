@@ -58,6 +58,14 @@ class AuthService {
     return doc.data()?['role'] as String?;
   }
 
+  Future<String?> getUserName(String uid) async {
+    final doc = await _db.collection('users').doc(uid).get();
+    if (!doc.exists) {
+      return null;
+    }
+    return doc.data()?['name'] as String?;
+  }
+
   // Check if the user account is active
   Future<bool> isUserActive(String uid) async {
     final doc = await _db.collection('users').doc(uid).get();

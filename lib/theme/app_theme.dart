@@ -19,6 +19,8 @@ class AppTheme {
           .copyWith(primary: AppColors.primary),
       // Background color every screen
       scaffoldBackgroundColor: AppColors.background,
+      appBarTheme: AppBarTheme(
+          backgroundColor: AppColors.primary, foregroundColor: Colors.white),
     );
   }
 
