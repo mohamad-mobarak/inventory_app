@@ -13,7 +13,10 @@ class ProductService {
   Future<void> addProduct(Product product, double purchasePrice) async {
     final batch = _db.batch();
     final productRef = _db.collection('products').doc();
-    batch.set(productRef, product.toMap());
+    // Prepares the product data and adds the creation time
+    final data = product.toMap();
+    data['createdAt'] = Timestamp.fromDate(DateTime.now());
+    batch.set(productRef, data);
     batch.set(_db.collection('productCosts').doc(productRef.id),
         {'purchasePrice': purchasePrice});
     await batch.commit();

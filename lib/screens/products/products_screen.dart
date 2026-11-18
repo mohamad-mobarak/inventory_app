@@ -265,6 +265,14 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     .where((p) =>
                         p.isActive && p.name.toLowerCase().contains(query))
                     .toList();
+                // Sorts products with the newest first and old products without a date last
+                products.sort((a, b) {
+                  if (a.createdAt == null && b.createdAt == null) return 0;
+                  if (a.createdAt == null) return 1;
+                  if (b.createdAt == null) return -1;
+                  // Compares two dates so the newest product comes first
+                  return b.createdAt!.compareTo(a.createdAt!);
+                });
                 if (products.isEmpty) {
                   return Center(
                     child:

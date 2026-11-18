@@ -58,6 +58,7 @@ class AuthService {
     return doc.data()?['role'] as String?;
   }
 
+  // Returns the user's name from the users collection, or null if not found
   Future<String?> getUserName(String uid) async {
     final doc = await _db.collection('users').doc(uid).get();
     if (!doc.exists) {

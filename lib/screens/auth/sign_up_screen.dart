@@ -13,28 +13,21 @@ class SignUpScreen extends StatefulWidget {
 
   @override
   // Create the object that holds this screen's changing data
-  // أنشئ الكائن الذي يحمل البيانات المتغيرة لهذه الشاشة
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
   // Controls password visibility for both password fields
-  // يتحكم بإظهار كلمة السر في الحقلين
   bool _obscurePassword = true;
   // Reads the admin name field
-  // يقرأ حقل اسم المدير
   final TextEditingController _adminNameController = TextEditingController();
   // Reads the shop name field
-  // يقرأ حقل اسم المحل
   final TextEditingController _shopNameController = TextEditingController();
   // Reads the email field
-  // يقرأ حقل الإيميل
   final TextEditingController _emailController = TextEditingController();
   // Reads the password field
-  // يقرأ حقل كلمة السر
   final TextEditingController _passwordController = TextEditingController();
   // Reads the confirm password field
-  // يقرأ حقل تأكيد كلمة السر
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   // Error message shown to the user
@@ -43,7 +36,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _isLoading = false;
 
   // Builds the same field style for every text field
-  // يبني نفس شكل الحقل لكل الحقول
   InputDecoration _decoration(String label, IconData icon,
       {Widget? suffixIcon}) {
     return InputDecoration(
@@ -54,15 +46,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       prefixIcon: Icon(icon),
       suffixIcon: suffixIcon,
       // Default field style
-      // الشكل الافتراضي للحقل
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
       // Border on focus
-      // الحدود عند التركيز
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide(color: AppColors.primary, width: 1.5)),
       // Unfocused border
-      // الحدود بدون تركيز
       enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide(color: Colors.grey.shade300, width: 1)),
@@ -80,10 +69,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   // Checks the fields and returns an error message, or null if all is fine
-  // يفحص الحقول ويرجع رسالة الخطأ، أو null إذا كل شي تمام
   String? _validate() {
     // Read the values and trim extra spaces
-    // اقرأ القيم وامسح المسافات الزائدة
     final adminName = _adminNameController.text.trim();
     final shopName = _shopNameController.text.trim();
     final email = _emailController.text.trim();
@@ -91,7 +78,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final confirmPassword = _confirmPasswordController.text.trim();
 
     // Any empty field is an error
-    // أي حقل فارغ هو خطأ
     if (adminName.isEmpty ||
         shopName.isEmpty ||
         email.isEmpty ||
@@ -100,22 +86,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
       return AppStrings.of(context).fillAllFields;
     }
     // The email must contain @
-    // الإيميل لازم يحتوي على @
     if (!email.contains('@')) {
       return AppStrings.of(context).invalidEmail;
     }
     // The password must be at least 6 characters
-    // كلمة السر لازم تكون 6 أحرف على الأقل
     if (password.length < 6) {
       return AppStrings.of(context).weakPassword;
     }
     // The confirmation must match the password
-    // التأكيد لازم يطابق كلمة السر
     if (password != confirmPassword) {
       return AppStrings.of(context).passwordsNotMatch;
     }
     // No errors found
-    // ما في أخطاء
     return null;
   }
 
@@ -155,11 +137,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       );
     } on FirebaseAuthException catch (e) {
       // Stop if the screen was closed while we were waiting
-      // نوقف إذا انسكرت الشاشة وإحنا نستنى
       if (!mounted) return;
 
       // Pick the right message based on Firebase's error code
-      // نختار الرسالة المناسبة حسب كود الخطأ من Firebase
       final strings = AppStrings.of(context);
       String message;
       switch (e.code) {
@@ -177,18 +157,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       }
 
       // Show the message and stop the loading
-      // نعرض الرسالة ونوقف التحميل
       setState(() {
         _errorMessage = message;
         _isLoading = false;
       });
     } catch (e) {
       // Stop if the screen was closed while we were waiting
-      // نوقف إذا انسكرت الشاشة وإحنا نستنى
       if (!mounted) return;
 
       // Any other unexpected error gets the general message
-      // أي خطأ غير متوقع ياخد الرسالة العامة
       setState(() {
         _errorMessage = AppStrings.of(context).signUpFailed;
         _isLoading = false;
@@ -200,7 +177,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // Transparent app bar, only to show the back arrow
-      // شريط علوي شفاف فقط لإظهار سهم الرجوع
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -218,10 +194,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               onPressed: () {
                 // Get the settings provider without listening to it
-                // احصل على المزوّد بدون الاستماع له
                 final settings = context.read<SettingsProvider>();
                 // Switch to the other language
-                // بدّل للغة الثانية
                 settings.setLocale(
                   Locale(settings.locale.languageCode == 'ar' ? 'en' : 'ar'),
                 );
@@ -234,14 +208,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SafeArea(
         child: Center(
           // Lets the form scroll when the keyboard opens
-          // يسمح للفورم بالتمرير عند فتح الكيبورد
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
                   // App logo
-                  // شعار التطبيق
                   Image.asset(
                     'assets/images/app_logo.png',
                     width: 100,
@@ -281,7 +253,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       AppStrings.of(context).password,
                       Icons.lock_outlined,
                       // Eye button to show or hide the password
-                      // زر العين لإظهار أو إخفاء كلمة السر
                       suffixIcon: IconButton(
                         icon: Icon(_obscurePassword
                             ? Icons.visibility_outlined
@@ -305,7 +276,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(height: 24),
                   SizedBox(
                     // Full width
-                    // العرض الكامل
                     width: double.infinity,
                     height: 48,
                     child: ElevatedButton(

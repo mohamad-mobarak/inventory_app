@@ -89,7 +89,22 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
 
       // Shows a success message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(s.saleCancelledSuccess)),
+        SnackBar(
+          content: Row(
+            children: [
+              Icon(Icons.check_circle,
+                  color: Theme.of(context).colorScheme.onPrimary),
+              SizedBox(
+                width: 10,
+              ),
+              Text(s.saleCancelledSuccess),
+            ],
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          behavior: SnackBarBehavior.floating,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        ),
       );
 
       // Returns to the previous screen

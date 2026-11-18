@@ -155,4 +155,15 @@ class SaleService {
         .map((snapshot) =>
             snapshot.docs.map((doc) => Sale.fromFirestore(doc)).toList());
   }
+
+  // Streams all sales created since a given date (for the dashboard), newest first.
+  Stream<List<Sale>> getSalesSince(DateTime since) {
+    return _db
+        .collection('sales')
+        .where('createdAt', isGreaterThanOrEqualTo: since)
+        .orderBy('createdAt', descending: true)
+        .snapshots()
+        .map((snapshot) =>
+            snapshot.docs.map((doc) => Sale.fromFirestore(doc)).toList());
+  }
 }

@@ -10,6 +10,7 @@ class Product {
   final bool isActive;
   final DateTime lastModifiedAt;
   final String lastModifiedBy;
+  final DateTime? createdAt;
   Product({
     required this.id,
     required this.name,
@@ -20,6 +21,7 @@ class Product {
     required this.isActive,
     required this.lastModifiedAt,
     required this.lastModifiedBy,
+    this.createdAt,
   });
   // Builds a Product from a Firestore document
   factory Product.fromFirestore(DocumentSnapshot doc) {
@@ -33,7 +35,10 @@ class Product {
         category: data['category'],
         isActive: data['isActive'],
         lastModifiedAt: (data['lastModifiedAt'] as Timestamp).toDate(),
-        lastModifiedBy: data['lastModifiedBy']);
+        lastModifiedBy: data['lastModifiedBy'],
+        createdAt: data['createdAt'] == null
+            ? null
+            : (data['createdAt'] as Timestamp).toDate());
   }
   // Converts this Product into a Map to save in Firestore
   Map<String, dynamic> toMap() {
@@ -46,6 +51,8 @@ class Product {
       'isActive': isActive,
       'lastModifiedAt': Timestamp.fromDate(lastModifiedAt),
       'lastModifiedBy': lastModifiedBy,
+      // Saves the creation time only when it exists
+      if (createdAt != null) 'createdAt': Timestamp.fromDate(createdAt!),
     };
   }
 }

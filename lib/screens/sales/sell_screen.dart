@@ -77,9 +77,22 @@ class _SellScreenState extends State<SellScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    AppStrings.of(context).cartTitle,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        AppStrings.of(context).cartTitle,
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Icon(Icons.shopping_cart,
+                          color: Theme.of(context).colorScheme.primary),
+                    ],
                   ),
                   const SizedBox(height: 12),
                   Flexible(
@@ -198,7 +211,7 @@ class _SellScreenState extends State<SellScreen> {
                   ],
                   // Total price in the app color, above the buttons.
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         AppStrings.of(context).cartTotalPrice,
@@ -208,6 +221,7 @@ class _SellScreenState extends State<SellScreen> {
                           color: colors.primary,
                         ),
                       ),
+                      SizedBox(width: 5),
                       Text(
                         '$_cartTotal',
                         style: TextStyle(
@@ -244,6 +258,9 @@ class _SellScreenState extends State<SellScreen> {
                           height: 48,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
+                              textStyle: TextStyle(fontWeight: FontWeight.bold),
+                              backgroundColor: colors.primary,
+                              foregroundColor: colors.onPrimary,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                               ),
@@ -274,6 +291,7 @@ class _SellScreenState extends State<SellScreen> {
     final user = FirebaseAuth.instance.currentUser;
     // Stops if no user is signed in
     if (user == null) return;
+    // Gets the seller's name from the users colllection
     String? sellerName = await AuthService().getUserName(user.uid);
     if (sellerName == null) return;
     setState(() {
@@ -292,8 +310,18 @@ class _SellScreenState extends State<SellScreen> {
       Navigator.pop(context);
       // Shows a success message
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(AppStrings.of(context).saleSuccess),
-      ));
+          content: Row(
+            children: [
+              Icon(Icons.check_circle,
+                  color: Theme.of(context).colorScheme.onPrimary),
+              SizedBox(width: 10),
+              Text(AppStrings.of(context).saleSuccess),
+            ],
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          behavior: SnackBarBehavior.floating,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))));
     } catch (e) {
       if (!mounted) return;
       final message = e.toString();
@@ -307,7 +335,22 @@ class _SellScreenState extends State<SellScreen> {
       }
       // Shows the final error message
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(text),
+        content: Row(
+          children: [
+            Icon(Icons.error, color: Colors.white),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+                child: Text(
+              text,
+              style: TextStyle(color: Colors.white),
+            )),
+          ],
+        ),
+        backgroundColor: AppColors.danger,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ));
     } finally {
       if (mounted)
@@ -341,18 +384,23 @@ class _SellScreenState extends State<SellScreen> {
     final s = AppStrings.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings.of(context).sellTab,
-            style: TextStyle(color: colors.primary)),
+        titleSpacing: 50,
+        title: Text(
+          AppStrings.of(context).sellTab,
+        ),
         actions: [
-          ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            SalesHistoryScreen(isAdmin: widget.isAdmin)));
-              },
-              child: Text(s.salesHistory)),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              SalesHistoryScreen(isAdmin: widget.isAdmin)));
+                },
+                child: Text(s.salesHistory)),
+          ),
         ],
       ),
       body: Stack(
@@ -419,38 +467,48 @@ class _SellScreenState extends State<SellScreen> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: ListTile(
-                          onTap: () {
-                            _addToCart(product);
-                          },
-                          title: Row(
-                            children: [
-                              Text(product.name),
-                              if (isLow) ...[
-                                const SizedBox(width: 6),
-                                Text(
-                                  AppStrings.of(context).lowStock,
-                                  style: TextStyle(
-                                    color: AppColors.warning,
-                                    fontSize: 12,
+                            onTap: () {
+                              _addToCart(product);
+                            },
+                            title: Row(
+                              children: [
+                                Text(product.name),
+                                if (isLow) ...[
+                                  const SizedBox(width: 6),
+                                  Text(
+                                    AppStrings.of(context).lowStock,
+                                    style: TextStyle(
+                                      color: AppColors.warning,
+                                      fontSize: 12,
+                                    ),
                                   ),
-                                ),
+                                ],
                               ],
-                            ],
-                          ),
-                          subtitle: Text(product.category),
-                          trailing: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  '${AppStrings.of(context).unitPrice}: ${product.salePrice}'),
-                              Text(
-                                '${AppStrings.of(context).availableLabel}: ${product.quantity}',
-                                style: TextStyle(color: stockColor),
-                              ),
-                            ],
-                          ),
-                        ),
+                            ),
+                            subtitle: Text(product.category),
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        '${AppStrings.of(context).unitPrice}: ${product.salePrice}'),
+                                    Text(
+                                      '${AppStrings.of(context).availableLabel}: ${product.quantity}',
+                                      style: TextStyle(color: stockColor),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Icon(Icons.add_shopping_cart,
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
+                              ],
+                            )),
                       );
                     },
                   );
@@ -465,37 +523,48 @@ class _SellScreenState extends State<SellScreen> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
-                color: colors.primaryContainer,
+                color: colors.primary,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.shopping_cart, color: colors.onPrimary),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        onPressed: _showCartSheet,
+                        child: Text(AppStrings.of(context).viewCart),
+                      ),
+                    ],
+                  ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${AppStrings.of(context).cartTitle}: ${_cartCount} ${AppStrings.of(context).piecesLabel}',
+                        '${AppStrings.of(context).itemsLabel}: ${_cartCount} ',
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: colors.onPrimaryContainer,
+                          color: colors.onPrimary,
                         ),
                       ),
                       Text(
                         '${AppStrings.of(context).cartTotalPrice}: $_cartTotal',
-                        style: TextStyle(color: colors.onPrimaryContainer),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: colors.onPrimary),
                       ),
                     ],
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    onPressed: _showCartSheet,
-                    child: Text(AppStrings.of(context).viewCart),
                   ),
                 ],
               ),

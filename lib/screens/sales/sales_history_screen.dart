@@ -11,6 +11,7 @@ import '../../utils/format_date.dart';
 class SalesHistoryScreen extends StatefulWidget {
   // Tells whether the current user is an admin.
   final bool isAdmin;
+  // Shows only this seller's sales when set (used from seller dertails)
   final String? sellerId;
   const SalesHistoryScreen({super.key, required this.isAdmin, this.sellerId});
 
@@ -25,7 +26,8 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
   // Holds the sales stream that matches the user role.
   late final Stream<List<Sale>> _salesStream;
 
-  // Picks all sales for an admin or only own sales for a seller.
+  // Picks all sales stream: one seller's sales if sellerId is set, 
+  // else all for an admin or own for a seller
   @override
   void initState() {
     super.initState();

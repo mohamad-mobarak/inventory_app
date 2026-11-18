@@ -12,16 +12,26 @@ class AppColors {
 class AppTheme {
   static ThemeData light() {
     return ThemeData(
-      // Enable Material 3
-      useMaterial3: true,
-      // Generate a palette from teal, then force the main color to be exactly our teal
-      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary)
-          .copyWith(primary: AppColors.primary),
-      // Background color every screen
-      scaffoldBackgroundColor: AppColors.background,
-      appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-    );
+        // Enable Material 3
+        useMaterial3: true,
+        // Generate a palette from teal, then force the main color to be exactly our teal
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary)
+            .copyWith(primary: AppColors.primary),
+        // Background color every screen
+        scaffoldBackgroundColor: AppColors.background,
+        appBarTheme: AppBarTheme(
+            backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+        navigationBarTheme: NavigationBarThemeData(
+            indicatorColor: AppColors.primary,
+            iconTheme: WidgetStateProperty.resolveWith((states) =>
+                states.contains(WidgetState.selected)
+                    ? IconThemeData(color: Colors.white)
+                    : IconThemeData(color: Colors.grey.shade700)),
+            labelTextStyle: WidgetStateProperty.resolveWith((states) =>
+                states.contains(WidgetState.selected)
+                    ? TextStyle(
+                        color: AppColors.primary, fontWeight: FontWeight.w500)
+                    : TextStyle(color: Colors.grey.shade700))));
   }
 
   static ThemeData dark() {

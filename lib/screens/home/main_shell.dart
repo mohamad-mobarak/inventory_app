@@ -3,6 +3,7 @@ import 'package:inventory_app/l10n/app_strings.dart';
 import '../products/products_screen.dart';
 import '../sales/sell_screen.dart';
 import '../sellers/sellers_screen.dart';
+import '../dashboard/dashboard_screen.dart';
 
 class MainShell extends StatefulWidget {
   final bool isAdmin;
@@ -20,6 +21,7 @@ class _MainShellState extends State<MainShell> {
     final List<Widget> screens = widget.isAdmin
         ? [
             ProductsScreen(isAdmin: true),
+            DashboardScreen(),
             const SellersScreen(),
             SellScreen(
               isAdmin: true,
@@ -44,9 +46,12 @@ class _MainShellState extends State<MainShell> {
         destinations: widget.isAdmin
             ? [
                 NavigationDestination(
-                  icon: Icon(Icons.inventory_2),
+                  icon: Icon(Icons.home),
                   label: AppStrings.of(context).products,
                 ),
+                NavigationDestination(
+                    icon: Icon(Icons.dashboard),
+                    label: AppStrings.of(context).dashboard),
                 NavigationDestination(
                   icon: Icon(Icons.people),
                   label: AppStrings.of(context).sellers,
@@ -58,7 +63,7 @@ class _MainShellState extends State<MainShell> {
               ]
             : [
                 NavigationDestination(
-                  icon: Icon(Icons.inventory_2),
+                  icon: Icon(Icons.home),
                   label: AppStrings.of(context).products,
                 ),
                 NavigationDestination(

@@ -192,7 +192,7 @@ class AppStrings {
       locale.languageCode == 'ar' ? 'أضف منتجات' : 'Add products';
   String get unitPrice => locale.languageCode == 'ar' ? 'السعر' : 'Price';
   String get cartTotalPrice =>
-      locale.languageCode == 'ar' ? 'إجمالي السعر' : 'Total price';
+      locale.languageCode == 'ar' ? 'إجمالي السعر:' : 'Total price:';
   String get confirmSale =>
       locale.languageCode == 'ar' ? 'تأكيد البيع' : 'Confirm sale';
   String get availableLabel =>
@@ -294,6 +294,25 @@ class AppStrings {
   String get noSearchResults => locale.languageCode == 'ar'
       ? 'لا توجد نتائج مطابقة'
       : 'No matching results';
+  String get itemsLabel => locale.languageCode == 'ar' ? 'القطع' : 'Items';
+  String get dashboard =>
+      locale.languageCode == 'ar' ? 'لوحة التحكم' : 'Dashboard';
+  String get today => locale.languageCode == 'ar' ? 'اليوم' : 'Today';
+  String get thisMonth =>
+      locale.languageCode == 'ar' ? 'هذا الشهر' : 'This month';
+  String get profit => locale.languageCode == 'ar' ? 'الربح' : 'Profit';
+  String get sales => locale.languageCode == 'ar' ? 'المبيعات' : 'Sales';
+  String get salesUnit => locale.languageCode == 'ar' ? 'بيعات' : 'sales';
+  String get excludesCancelled =>
+      locale.languageCode == 'ar' ? 'بدون الملغاة' : 'Excluding cancelled';
+  String get lowStockTitle =>
+      locale.languageCode == 'ar' ? 'منتجات قاربت تخلص' : 'Running low';
+  String get productsNeedRestock => locale.languageCode == 'ar'
+      ? 'منتجات تحتاج إعادة تعبئة'
+      : 'products need restocking';
+  String get noLowStock => locale.languageCode == 'ar'
+      ? 'كل المنتجات بكمية كافية'
+      : 'All products are well stocked';
 }
 
 // Tells Flutter how to load AppStrings

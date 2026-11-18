@@ -16,7 +16,7 @@ class SellersScreen extends StatelessWidget {
     final service = SellerService();
 
     return Scaffold(
-        appBar: AppBar(title: Text(s.sellers)),
+        appBar: AppBar(centerTitle: true, title: Text(s.sellers)),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             // Open the add seller screen on top of this one
