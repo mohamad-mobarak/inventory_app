@@ -36,10 +36,19 @@ class AppTheme {
 
   static ThemeData dark() {
     return ThemeData(
-      useMaterial3: true,
-      // Same teal seed, but generate the dark version of the palette
-      colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primary, brightness: Brightness.dark),
-    );
+        useMaterial3: true,
+        // Same teal seed, but generate the dark version of the palette
+        colorScheme: ColorScheme.fromSeed(
+                seedColor: AppColors.primary, brightness: Brightness.dark)
+            .copyWith(primary: AppColors.primary),
+        appBarTheme: AppBarTheme(
+            backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+        navigationBarTheme: NavigationBarThemeData(
+            indicatorColor: AppColors.primary,
+            labelTextStyle: WidgetStateProperty.resolveWith((states) =>
+                states.contains(WidgetState.selected)
+                    ? TextStyle(
+                        color: AppColors.primary, fontWeight: FontWeight.w500)
+                    : TextStyle())));
   }
 }

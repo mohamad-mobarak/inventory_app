@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:inventory_app/theme/app_theme.dart';
@@ -38,7 +36,7 @@ class _AddSellerScreenState extends State<AddSellerScreen> {
     return InputDecoration(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       filled: true,
-      fillColor: Colors.white,
+      fillColor: Theme.of(context).colorScheme.surface,
       labelText: label,
       helperText: helper,
       prefixIcon: Icon(icon),
@@ -50,7 +48,7 @@ class _AddSellerScreenState extends State<AddSellerScreen> {
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
-        borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+        borderSide: BorderSide(color: AppColors.primary, width: 1),
       ),
     );
   }

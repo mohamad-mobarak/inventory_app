@@ -113,20 +113,25 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       body: SafeArea(
-          child: Center(
+
+          // Makes the form scrollable when the keyboard opens
+          child: SingleChildScrollView(
               // Side spacing for the form
               child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
           children: [
+            SizedBox(
+              height: 12,
+            ),
             // Put the language button on the right side
             Align(
               // Right edge of the screen
               alignment: Alignment.centerRight,
               child: TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-                    foregroundColor: AppColors.primary,
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                   ),
@@ -145,10 +150,13 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 10,
             ),
             // App logo
-            Image.asset(
-              'assets/images/app_logo.png',
-              width: 100,
-              height: 100,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(25),
+              child: Image.asset(
+                'assets/images/app_logo.png',
+                width: 100,
+                height: 100,
+              ),
             ),
             const SizedBox(
               height: 16,
@@ -189,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Theme.of(context).colorScheme.surface,
                   labelText: AppStrings.of(context).email,
                   hintText: AppStrings.of(context).emailHint,
                   prefixIcon: Icon(Icons.email_outlined),
@@ -204,8 +212,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   // Unfocused border
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          BorderSide(color: Colors.grey.shade300, width: 1))),
+                      borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.outlineVariant,
+                          width: 1))),
             ),
             const SizedBox(
               height: 16,
@@ -217,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Theme.of(context).colorScheme.surface,
                 labelText: AppStrings.of(context).password,
                 prefixIcon: Icon(Icons.lock_outlined),
                 // Eye button to show or hide the password
@@ -243,8 +252,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
-                    borderSide:
-                        BorderSide(color: Colors.grey.shade300, width: 1)),
+                    borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.outlineVariant,
+                        width: 1)),
               ),
               // Use the variable instead of a fixed value
               obscureText: _obscurePassword,

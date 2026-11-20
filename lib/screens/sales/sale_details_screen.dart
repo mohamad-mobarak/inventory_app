@@ -7,6 +7,8 @@ import '../../theme/app_theme.dart';
 import '../../utils/format_date.dart';
 import '../../services/auth_service.dart';
 import '../../services/sale_service.dart';
+import '../../providers/settings_provider.dart';
+import 'package:provider/provider.dart';
 
 // Shows the full details of one sale.
 class SaleDetailsScreen extends StatefulWidget {
@@ -202,7 +204,9 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
   }
 
   // Builds the card of one product with its three boxes.
-  Widget _buildItemCard(SaleItem item, AppStrings s) {
+  Widget _buildItemCard(BuildContext context, SaleItem item, AppStrings s) {
+    final currency = context.watch<SettingsProvider>().currency ?? '';
+
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
@@ -219,9 +223,9 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
               children: [
                 _buildStatBox(s.quantityLabel, item.quantity.toString()),
                 const SizedBox(width: 8),
-                _buildStatBox(s.pricePerPiece, item.unitPrice.toString()),
+                _buildStatBox(s.pricePerPiece, '${item.unitPrice} $currency'),
                 const SizedBox(width: 8),
-                _buildStatBox(s.lineTotalLabel, item.lineTotal.toString()),
+                _buildStatBox(s.lineTotalLabel, '${item.lineTotal} $currency'),
               ],
             ),
           ],
@@ -231,8 +235,10 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
   }
 
   // Builds the row that shows the total of the whole sale.
-  Widget _buildTotalRow(AppStrings s) {
+  Widget _buildTotalRow(BuildContext context, AppStrings s) {
     final sale = widget.sale;
+    final currency = context.watch<SettingsProvider>().currency ?? '';
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Row(
@@ -243,7 +249,7 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           Text(
-            sale.total.toString(),
+            '${sale.total} $currency',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -300,8 +306,8 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
         children: [
           _buildInfoCard(s),
           const SizedBox(height: 8),
-          ...sale.items.map((item) => _buildItemCard(item, s)),
-          _buildTotalRow(s),
+          ...sale.items.map((item) => _buildItemCard(context, item, s)),
+          _buildTotalRow(context, s),
           const SizedBox(height: 8),
           if (canCancel) ...[
             SizedBox(

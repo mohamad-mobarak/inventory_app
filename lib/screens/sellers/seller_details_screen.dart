@@ -97,7 +97,7 @@ class _SellerDetailsScreenState extends State<SellerDetailsScreen> {
                   contentPadding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Theme.of(context).colorScheme.surface,
                   labelText: s.sellerName,
                   prefixIcon: const Icon(Icons.person_outline),
                   border: OutlineInputBorder(
@@ -109,7 +109,7 @@ class _SellerDetailsScreenState extends State<SellerDetailsScreen> {
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(color: Colors.grey.shade300),
+                    borderSide: BorderSide(color: AppColors.primary),
                   ),
                 ),
               ),

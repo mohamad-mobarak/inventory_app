@@ -4,6 +4,7 @@ import '../products/products_screen.dart';
 import '../sales/sell_screen.dart';
 import '../sellers/sellers_screen.dart';
 import '../dashboard/dashboard_screen.dart';
+import '../settings/settings_screen.dart';
 
 class MainShell extends StatefulWidget {
   final bool isAdmin;
@@ -26,12 +27,14 @@ class _MainShellState extends State<MainShell> {
             SellScreen(
               isAdmin: true,
             ),
+            SettingsScreen(isAdmin: true),
           ]
         : [
             ProductsScreen(isAdmin: false),
             SellScreen(
               isAdmin: false,
             ),
+            SettingsScreen(isAdmin: false),
           ];
     return Scaffold(
       // Keeps every screen alive and shows only the selected one.
@@ -60,6 +63,10 @@ class _MainShellState extends State<MainShell> {
                   icon: Icon(Icons.shopping_cart),
                   label: AppStrings.of(context).sellTab,
                 ),
+                NavigationDestination(
+                  icon: Icon(Icons.settings),
+                  label: AppStrings.of(context).settings,
+                ),
               ]
             : [
                 NavigationDestination(
@@ -69,6 +76,10 @@ class _MainShellState extends State<MainShell> {
                 NavigationDestination(
                   icon: Icon(Icons.shopping_cart),
                   label: AppStrings.of(context).sellTab,
+                ),
+                NavigationDestination(
+                  icon: Icon(Icons.settings),
+                  label: AppStrings.of(context).settings,
                 ),
               ],
       ),

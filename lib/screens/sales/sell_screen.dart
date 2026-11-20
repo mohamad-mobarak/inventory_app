@@ -8,6 +8,8 @@ import '../../theme/app_theme.dart';
 import '../../services/product_service.dart';
 import '../../services/auth_service.dart';
 import 'sales_history_screen.dart';
+import 'package:provider/provider.dart';
+import '../../providers/settings_provider.dart';
 
 // Screen where a seller picks products, fills a cart and records a sale.
 class SellScreen extends StatefulWidget {
@@ -68,6 +70,7 @@ class _SellScreenState extends State<SellScreen> {
       builder: (sheetContext) {
         // Theme colors used for the total price.
         final colors = Theme.of(context).colorScheme;
+        final currency = context.watch<SettingsProvider>().currency ?? '';
 
         return StatefulBuilder(builder: (context, setSheetState) {
           return SafeArea(
@@ -140,7 +143,7 @@ class _SellScreenState extends State<SellScreen> {
                                               ),
                                             ),
                                             Text(
-                                                '${AppStrings.of(context).unitPrice}:  ${product.salePrice}'),
+                                                '${AppStrings.of(context).unitPrice}:  ${product.salePrice} $currency'),
                                           ],
                                         ),
                                       ),
@@ -381,6 +384,8 @@ class _SellScreenState extends State<SellScreen> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final currency = context.watch<SettingsProvider>().currency ?? '';
+
     final s = AppStrings.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -494,7 +499,7 @@ class _SellScreenState extends State<SellScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                        '${AppStrings.of(context).unitPrice}: ${product.salePrice}'),
+                                        '${AppStrings.of(context).unitPrice}: ${product.salePrice} $currency'),
                                     Text(
                                       '${AppStrings.of(context).availableLabel}: ${product.quantity}',
                                       style: TextStyle(color: stockColor),

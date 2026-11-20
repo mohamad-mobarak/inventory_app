@@ -6,6 +6,8 @@ import 'sale_details_screen.dart';
 import '../../services/sale_service.dart';
 import '../../theme/app_theme.dart';
 import '../../utils/format_date.dart';
+import '../../providers/settings_provider.dart';
+import 'package:provider/provider.dart';
 
 // Screen that lists the recent sales, newest first.
 class SalesHistoryScreen extends StatefulWidget {
@@ -26,7 +28,7 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
   // Holds the sales stream that matches the user role.
   late final Stream<List<Sale>> _salesStream;
 
-  // Picks all sales stream: one seller's sales if sellerId is set, 
+  // Picks all sales stream: one seller's sales if sellerId is set,
   // else all for an admin or own for a seller
   @override
   void initState() {
@@ -46,6 +48,7 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
     final s = AppStrings.of(context);
     final statusColor = sale.isCancelled ? AppColors.danger : AppColors.success;
     final names = sale.items.map((item) => item.productName).join(', ');
+    final currency = context.watch<SettingsProvider>().currency ?? '';
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -88,7 +91,7 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
               children: [
                 Text('${sale.itemCount} ${s.piecesLabel}'),
                 Text(
-                  '${s.totalLabel}: ${sale.total}',
+                  '${s.totalLabel}: ${sale.total} $currency',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: sale.isCancelled ? AppColors.danger : null,

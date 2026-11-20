@@ -139,8 +139,7 @@ class AppStrings {
       locale.languageCode == 'ar' ? 'اختر التصنيف' : 'Choose category';
   String get addNewCategory =>
       locale.languageCode == 'ar' ? 'إضافة تصنيف جديد' : 'Add new category';
-  String get adminOnly =>
-      locale.languageCode == 'ar' ? '(للمدير فقط)' : '(Admin only)';
+
   String get saveProduct =>
       locale.languageCode == 'ar' ? 'حفظ المنتج' : 'Save product';
   String get cancel => locale.languageCode == 'ar' ? 'إلغاء' : 'Cancel';
@@ -313,6 +312,34 @@ class AppStrings {
   String get noLowStock => locale.languageCode == 'ar'
       ? 'كل المنتجات بكمية كافية'
       : 'All products are well stocked';
+  String get settings => locale.languageCode == 'ar' ? 'الإعدادات' : 'Settings';
+  String get language => locale.languageCode == 'ar' ? 'اللغة' : 'Language';
+  String get arabic => 'عربي';
+  String get english => 'English';
+  String get appearance =>
+      locale.languageCode == 'ar' ? 'المظهر' : 'Appearance';
+  String get lightMode => locale.languageCode == 'ar' ? 'فاتح' : 'Light';
+  String get darkMode => locale.languageCode == 'ar' ? 'داكن' : 'Dark';
+  String get systemMode => locale.languageCode == 'ar' ? 'الجهاز' : 'System';
+  String get accountInfo =>
+      locale.languageCode == 'ar' ? 'معلومات الحساب' : 'Account info';
+  String get name => locale.languageCode == 'ar' ? 'الاسم' : 'Name';
+  String get role => locale.languageCode == 'ar' ? 'الدور' : 'Role';
+  String get admin => locale.languageCode == 'ar' ? 'مدير' : 'Admin';
+  String get seller => locale.languageCode == 'ar' ? 'بائع' : 'Seller';
+  String get currency => locale.languageCode == 'ar' ? 'العملة' : 'Currency';
+  String get currencyHint =>
+      locale.languageCode == 'ar' ? 'مثال: \$ أو ل.س' : 'Example: \$ or SYP';
+  String get save => locale.languageCode == 'ar' ? 'حفظ' : 'Save';
+  String get adminOnly =>
+      locale.languageCode == 'ar' ? 'للمدير فقط' : 'Admin only';
+  String get aboutApp =>
+      locale.languageCode == 'ar' ? 'عن التطبيق' : 'About the app';
+  String get versionNumber =>
+      locale.languageCode == 'ar' ? 'رقم النسخة' : 'Version number';
+  String get logout => locale.languageCode == 'ar' ? 'تسجيل الخروج' : 'Log out';
+  String get currencySaved =>
+      locale.languageCode == 'ar' ? 'تم حفظ العملة' : 'Currency saved';
 }
 
 // Tells Flutter how to load AppStrings

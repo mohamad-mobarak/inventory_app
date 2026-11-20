@@ -41,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return InputDecoration(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       filled: true,
-      fillColor: Colors.white,
+      fillColor: Theme.of(context).colorScheme.surface,
       labelText: label,
       prefixIcon: Icon(icon),
       suffixIcon: suffixIcon,
@@ -54,7 +54,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // Unfocused border
       enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: Colors.grey.shade300, width: 1)),
+          borderSide: BorderSide(
+              color: Theme.of(context).colorScheme.outlineVariant, width: 1)),
     );
   }
 
@@ -187,8 +188,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-                foregroundColor: AppColors.primary,
+                backgroundColor: AppColors.primary,
+                foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
               ),
@@ -213,11 +214,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 children: [
-                  // App logo
-                  Image.asset(
-                    'assets/images/app_logo.png',
-                    width: 100,
-                    height: 100,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: // App logo
+                        Image.asset(
+                      'assets/images/app_logo.png',
+                      width: 100,
+                      height: 100,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Text(

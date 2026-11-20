@@ -6,6 +6,8 @@ import '../../theme/app_theme.dart';
 import '../../services/product_service.dart';
 import '../../models/product.dart';
 import 'edit_product_screen.dart';
+import 'package:provider/provider.dart';
+import '../../providers/settings_provider.dart';
 
 // Products list screen (isAdmin: true = admin, false = seller)
 class ProductsScreen extends StatefulWidget {
@@ -87,6 +89,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
 
   // Builds one product card: image placeholder, name, price, quantity, badge
   Widget _buildProductCard(BuildContext context, AppStrings s, Product p) {
+    final currency = context.watch<SettingsProvider>().currency ?? '';
     return Card(
       elevation: 2,
       margin: const EdgeInsets.only(bottom: 12),
@@ -139,7 +142,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${s.salePrice}: ${p.salePrice}',
+                      '${s.salePrice}: ${p.salePrice} $currency',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,

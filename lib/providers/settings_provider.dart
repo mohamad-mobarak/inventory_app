@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 class SettingsProvider extends ChangeNotifier {
   // Current theme choice; starts by following the device setting
   ThemeMode _themeMode = ThemeMode.system;
+  String? _currency;
+
   // Lets other files read the theme mode without being able to change it
   ThemeMode get themeMode => _themeMode;
+  String? get currency => _currency;
   void setThemeMode(ThemeMode mode) {
     // Save the new choice into the private variable
     _themeMode = mode;
@@ -17,6 +20,11 @@ class SettingsProvider extends ChangeNotifier {
   // Save the new language and tell the app to rebuild
   void setLocale(Locale locale) {
     _locale = locale;
+    notifyListeners();
+  }
+
+  void setCurrency(String? currency) {
+    _currency = currency;
     notifyListeners();
   }
 }
