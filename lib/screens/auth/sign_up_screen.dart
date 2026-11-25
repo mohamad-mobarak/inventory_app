@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:inventory_app/services/auth_service.dart';
+import '../../services/auth_service.dart';
 import 'package:provider/provider.dart';
 import '../../providers/settings_provider.dart';
 import '../../l10n/app_strings.dart';
 import '../../theme/app_theme.dart';
-import '../../services/auth_service.dart';
 import '../../screens/home/main_shell.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -50,7 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // Border on focus
       focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: AppColors.primary, width: 1.5)),
+          borderSide: const BorderSide(color: AppColors.primary, width: 1.5)),
       // Unfocused border
       enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
@@ -176,6 +175,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return Scaffold(
       // Transparent app bar, only to show the back arrow
       appBar: AppBar(
@@ -188,8 +188,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
+                backgroundColor: colors.primary,
+                foregroundColor: colors.onPrimary,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
               ),
@@ -229,7 +229,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.primary),
+                        color: colors.primary),
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -285,17 +285,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
+                        foregroundColor: colors.onPrimary,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
                       ),
                       onPressed: _isLoading ? null : _signUp,
                       child: _isLoading
-                          ? const SizedBox(
+                          ? SizedBox(
                               width: 20,
                               height: 20,
                               child: CircularProgressIndicator(
-                                color: Colors.white,
+                                color: colors.onPrimary,
                                 strokeWidth: 2,
                               ),
                             )
@@ -324,7 +324,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Text(AppStrings.of(context).login,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.primary)),
+                                color: colors.primary)),
                       ),
                     ],
                   ),

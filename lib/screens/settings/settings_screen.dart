@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:inventory_app/services/settings_service.dart';
+import '../../services/settings_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../l10n/app_strings.dart';

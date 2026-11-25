@@ -1,4 +1,4 @@
-import 'package:inventory_app/screens/auth/auth_gate.dart';
+import '../screens/auth/auth_gate.dart';
 import 'l10n/app_strings.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +7,14 @@ import 'theme/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'providers/settings_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/foundation.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: AppFirebaseOptions.web);
+  // Picks the Firebase keys for the current platform
+  await Firebase.initializeApp(
+    options: kIsWeb ? AppFirebaseOptions.web : AppFirebaseOptions.android,
+  );
   // Provide one SettingsProvider to the whole app
   runApp(
     ChangeNotifierProvider(
@@ -42,7 +46,7 @@ class MyApp extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       // First screen shown when the app starts
-      home: AuthGate(),
+      home: const AuthGate(),
     );
   }
 }

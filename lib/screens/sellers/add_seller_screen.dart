@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:inventory_app/theme/app_theme.dart';
+import '../../theme/app_theme.dart';
 import '../../l10n/app_strings.dart';
 import '../../services/seller_service.dart';
 
@@ -119,7 +119,7 @@ class _AddSellerScreenState extends State<AddSellerScreen> {
   @override
   Widget build(BuildContext context) {
     final s = AppStrings.of(context);
-
+    final colors = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(title: Text(s.addSeller)),
       body: SafeArea(
@@ -164,17 +164,17 @@ class _AddSellerScreenState extends State<AddSellerScreen> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
+                    foregroundColor: colors.onPrimary,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                   ),
                   onPressed: _isLoading ? null : _addSeller,
                   child: _isLoading
-                      ? const SizedBox(
+                      ? SizedBox(
                           height: 24,
                           width: 24,
                           child: CircularProgressIndicator(
-                            color: Colors.white,
+                            color: colors.onPrimary,
                           ),
                         )
                       : Text(s.createSellerAccount,

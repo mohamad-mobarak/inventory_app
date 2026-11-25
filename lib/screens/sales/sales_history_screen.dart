@@ -8,6 +8,7 @@ import '../../theme/app_theme.dart';
 import '../../utils/format_date.dart';
 import '../../providers/settings_provider.dart';
 import 'package:provider/provider.dart';
+import '../../utils/format_money.dart';
 
 // Screen that lists the recent sales, newest first.
 class SalesHistoryScreen extends StatefulWidget {
@@ -91,7 +92,7 @@ class _SalesHistoryScreenState extends State<SalesHistoryScreen> {
               children: [
                 Text('${sale.itemCount} ${s.piecesLabel}'),
                 Text(
-                  '${s.totalLabel}: ${sale.total} $currency',
+                  '${s.totalLabel}: ${formatMoney(sale.total, currency)}',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: sale.isCancelled ? AppColors.danger : null,

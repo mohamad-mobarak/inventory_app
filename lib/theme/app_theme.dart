@@ -47,8 +47,7 @@ class AppTheme {
             indicatorColor: AppColors.primary,
             labelTextStyle: WidgetStateProperty.resolveWith((states) =>
                 states.contains(WidgetState.selected)
-                    ? TextStyle(
-                        color: AppColors.primary, fontWeight: FontWeight.w500)
+                    ? TextStyle(fontWeight: FontWeight.w500)
                     : TextStyle())));
   }
 }

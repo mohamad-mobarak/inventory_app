@@ -7,6 +7,7 @@ import '../../services/sale_service.dart';
 import '../../theme/app_theme.dart';
 import '../../providers/settings_provider.dart';
 import 'package:provider/provider.dart';
+import '../../utils/format_money.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -157,10 +158,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
             // Shows dots until the purchase prices are loaded
             final String todayProfit = costs == null
                 ? '...'
-                : _calculateProfit(todaySales, costs).toStringAsFixed(2);
+                : formatMoney(_calculateProfit(todaySales, costs), currency);
             final String monthProfit = costs == null
                 ? '...'
-                : _calculateProfit(monthSales, costs).toStringAsFixed(2);
+                : formatMoney(_calculateProfit(monthSales, costs), currency);
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +178,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         icon: Icons.receipt_long,
                         label: s.sales,
                         value:
-                            '${_calculateTotal(todaySales).toStringAsFixed(2)} $currency',
+                            '${formatMoney(_calculateTotal(todaySales), currency)}',
                         note: '${todaySales.length} ${s.salesUnit}',
                       ),
                     ),
@@ -186,9 +187,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       child: _buildStatCard(
                         icon: Icons.trending_up,
                         label: s.profit,
-                        value: costs == null
-                            ? todayProfit
-                            : '$todayProfit $currency',
+                        value: costs == null ? todayProfit : todayProfit,
                         note: s.excludesCancelled,
                         accent: AppColors.success,
                       ),
@@ -208,7 +207,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         icon: Icons.receipt_long,
                         label: s.sales,
                         value:
-                            '${_calculateTotal(monthSales).toStringAsFixed(2)} $currency',
+                            '${formatMoney(_calculateTotal(monthSales), currency)}',
                         note: '${monthSales.length} ${s.salesUnit}',
                       ),
                     ),
@@ -217,9 +216,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       child: _buildStatCard(
                         icon: Icons.trending_up,
                         label: s.profit,
-                        value: costs == null
-                            ? monthProfit
-                            : '$monthProfit $currency',
+                        value: costs == null ? monthProfit : monthProfit,
                         note: s.excludesCancelled,
                         accent: AppColors.success,
                       ),

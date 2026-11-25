@@ -27,4 +27,13 @@ class SettingsProvider extends ChangeNotifier {
     _currency = currency;
     notifyListeners();
   }
+
+  // Message to show on the login screen after a forced sign out
+  String? _loginNotice;
+  String? get loginNotice => _loginNotice;
+  // Save the login message and tells the app to rebuild
+  void setLoginNotice(String? notice) {
+    _loginNotice = notice;
+    notifyListeners();
+  }
 }

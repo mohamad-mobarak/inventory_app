@@ -9,6 +9,7 @@ import '../../services/auth_service.dart';
 import '../../services/sale_service.dart';
 import '../../providers/settings_provider.dart';
 import 'package:provider/provider.dart';
+import '../../utils/format_money.dart';
 
 // Shows the full details of one sale.
 class SaleDetailsScreen extends StatefulWidget {
@@ -184,12 +185,13 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
   }
 
   // Builds a small rounded box with a label above a value.
-  Widget _buildStatBox(String label, String value) {
+  Widget _buildStatBox(BuildContext context, String label, String value) {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 6),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade300),
+          border:
+              Border.all(color: Theme.of(context).colorScheme.outlineVariant),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -221,11 +223,14 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
             const SizedBox(height: 12),
             Row(
               children: [
-                _buildStatBox(s.quantityLabel, item.quantity.toString()),
+                _buildStatBox(
+                    context, s.quantityLabel, item.quantity.toString()),
                 const SizedBox(width: 8),
-                _buildStatBox(s.pricePerPiece, '${item.unitPrice} $currency'),
+                _buildStatBox(context, s.pricePerPiece,
+                    '${formatMoney(item.unitPrice, currency)}'),
                 const SizedBox(width: 8),
-                _buildStatBox(s.lineTotalLabel, '${item.lineTotal} $currency'),
+                _buildStatBox(context, s.lineTotalLabel,
+                    '${formatMoney(item.lineTotal, currency)}'),
               ],
             ),
           ],
@@ -249,7 +254,7 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
           Text(
-            '${sale.total} $currency',
+            '${formatMoney(sale.total, currency)}',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,

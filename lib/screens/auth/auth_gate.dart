@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 // Firebase Auth to know who is signed in
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:inventory_app/providers/settings_provider.dart';
-import 'package:inventory_app/screens/home/main_shell.dart';
+import '../../l10n/app_strings.dart';
+import '../../providers/settings_provider.dart';
+import '../home/main_shell.dart';
 // Our service that talks to Firebase
 import '../../services/auth_service.dart';
 // Login page
@@ -84,18 +85,41 @@ class _UserCheckState extends State<_UserCheck> {
 
   // Checks the account and returns the screen to open
   Future<Widget> _decideScreen() async {
+    // Get the user's role
+    final role = await _authService.getUserRole(widget.user.uid);
+    // Unregistered account: sign out and go to login
+    if (role == null) {
+      if (!mounted) return const SizedBox();
+
+      // Save the unregistered account message before signing out
+      context
+          .read<SettingsProvider>()
+          .setLoginNotice(AppStrings.of(context).accountNotRegistered);
+      await _authService.signOut();
+      return LoginScreen();
+    }
     // Ask Firestore if this account is active
     final isActive = await _authService.isUserActive(widget.user.uid);
     // Disabled account: sign out and go to login
     if (!isActive) {
+      if (!mounted) return const SizedBox();
+
+      // Saves the disabled account message before signing out
+      context
+          .read<SettingsProvider>()
+          .setLoginNotice(AppStrings.of(context).accountDisabled);
       await _authService.signOut();
       return LoginScreen();
     }
-    // Get the user's role
-    final role = await _authService.getUserRole(widget.user.uid);
-    final currensy = await SettingsService().getCurrency();
+
+    String? currency;
+    try {
+      currency = await SettingsService().getCurrency();
+    } catch (e) {
+      // Ignores the error, the currency stays null
+    }
     if (!mounted) return const SizedBox();
-    context.read<SettingsProvider>().setCurrency(currensy);
+    context.read<SettingsProvider>().setCurrency(currency);
     // Active account: open the home page
     return MainShell(isAdmin: role == 'admin');
   }

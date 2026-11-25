@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:inventory_app/services/sale_service.dart';
+import '../../services/sale_service.dart';
 import '../../models/product.dart';
-import '../../models/sale.dart';
 import '../../l10n/app_strings.dart';
 import '../../theme/app_theme.dart';
 import '../../services/product_service.dart';
@@ -10,6 +9,7 @@ import '../../services/auth_service.dart';
 import 'sales_history_screen.dart';
 import 'package:provider/provider.dart';
 import '../../providers/settings_provider.dart';
+import '../../utils/format_money.dart';
 
 // Screen where a seller picks products, fills a cart and records a sale.
 class SellScreen extends StatefulWidget {
@@ -143,14 +143,14 @@ class _SellScreenState extends State<SellScreen> {
                                               ),
                                             ),
                                             Text(
-                                                '${AppStrings.of(context).unitPrice}:  ${product.salePrice} $currency'),
+                                                '${AppStrings.of(context).unitPrice}:  ${formatMoney(product.salePrice, currency)} '),
                                           ],
                                         ),
                                       ),
                                       Container(
                                         decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.grey),
+                                          border: Border.all(
+                                              color: colors.outlineVariant),
                                           borderRadius:
                                               BorderRadius.circular(20),
                                         ),
@@ -224,9 +224,9 @@ class _SellScreenState extends State<SellScreen> {
                           color: colors.primary,
                         ),
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
-                        '$_cartTotal',
+                        '${formatMoney(_cartTotal, currency)}',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -340,14 +340,14 @@ class _SellScreenState extends State<SellScreen> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Row(
           children: [
-            Icon(Icons.error, color: Colors.white),
-            SizedBox(
+            const Icon(Icons.error, color: Colors.white),
+            const SizedBox(
               width: 10,
             ),
             Expanded(
                 child: Text(
               text,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             )),
           ],
         ),
@@ -499,7 +499,7 @@ class _SellScreenState extends State<SellScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                        '${AppStrings.of(context).unitPrice}: ${product.salePrice} $currency'),
+                                        '${AppStrings.of(context).unitPrice}: ${formatMoney(product.salePrice, currency)}'),
                                     Text(
                                       '${AppStrings.of(context).availableLabel}: ${product.quantity}',
                                       style: TextStyle(color: stockColor),
@@ -564,7 +564,7 @@ class _SellScreenState extends State<SellScreen> {
                         ),
                       ),
                       Text(
-                        '${AppStrings.of(context).cartTotalPrice}: $_cartTotal',
+                        '${AppStrings.of(context).cartTotalPrice}: ${formatMoney(_cartTotal, currency)}',
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: colors.onPrimary),

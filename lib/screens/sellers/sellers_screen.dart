@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_app/screens/sellers/add_seller_screen.dart';
-import 'package:inventory_app/screens/sellers/seller_details_screen.dart';
+import '../sellers/add_seller_screen.dart';
+import '../sellers/seller_details_screen.dart';
 import '../../l10n/app_strings.dart';
-import 'package:inventory_app/theme/app_theme.dart';
+import '../../theme/app_theme.dart';
 import '../../services/seller_service.dart';
 import '../../models/app_user.dart';
 
@@ -26,7 +26,7 @@ class SellersScreen extends StatelessWidget {
                     builder: (context) => const AddSellerScreen()));
           },
           backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
           icon: const Icon(Icons.person_add),
           label: Text(s.addSeller),
         ),
@@ -83,7 +83,8 @@ class SellersScreen extends StatelessWidget {
                       trailing: Text(
                         isActive ? s.sellerActive : s.sellerDisabled,
                         style: TextStyle(
-                          color: isActive ? Colors.green : AppColors.danger,
+                          color:
+                              isActive ? AppColors.success : AppColors.danger,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

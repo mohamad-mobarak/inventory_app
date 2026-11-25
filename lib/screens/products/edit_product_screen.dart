@@ -1,8 +1,7 @@
 // Imports: Flutter widgets, our texts, our colors
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:inventory_app/services/product_service.dart';
+import '../../services/product_service.dart';
 import '../../l10n/app_strings.dart';
 import '../../theme/app_theme.dart';
 import '../../models/product.dart';

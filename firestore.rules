@@ -1,0 +1,136 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ================= Helper functions =================
+
+    // is there a signed-in user?
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // the current user's document from the users collection
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    // signed in + has a user document + isActive is true
+    function isActiveUser() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && userDoc().isActive == true;
+    }
+
+    // active user whose role is admin
+    function isAdmin() {
+      return isActiveUser() && userDoc().role == 'admin';
+    }
+
+    // active user whose role is seller
+    function isSeller() {
+      return isActiveUser() && userDoc().role == 'seller';
+    }
+
+    // a seller may change only the quantity field of a product
+    function onlyQuantityChanged() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['quantity'])
+        && request.resource.data.quantity is int
+        && request.resource.data.quantity >= 0;
+    }
+
+    // ================= users =================
+    match /users/{uid} {
+      // admin reads any user, everyone reads only their own document
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+
+      // admin adds sellers, or the first person registers as admin
+      // (only while settings/setup does not exist yet)
+      allow create: if (isAdmin() && request.resource.data.role == 'seller')
+        || (signedIn() && request.auth.uid == uid
+            && !exists(/databases/$(database)/documents/settings/setup)
+            && request.resource.data.role == 'admin');
+
+      // admin edits users (name, isActive) but a role can never change
+      allow update: if isAdmin() && request.resource.data.role == resource.data.role;
+
+      // no permanent delete
+      allow delete: if false;
+    }
+
+    // ================= settings =================
+    match /settings/shop {
+      allow read: if isActiveUser();
+      allow write: if isAdmin();
+    }
+
+    match /settings/setup {
+      // open read: the app must know if sign up is still open before login
+      allow read: if true;
+      // created once, by the first admin
+      allow create: if signedIn()
+        && !exists(/databases/$(database)/documents/settings/setup)
+        && request.resource.data.adminUid == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // ================= products =================
+    match /products/{productId} {
+      allow read: if isActiveUser();
+      allow create: if isAdmin();
+      // admin edits anything, a seller only changes the quantity
+      allow update: if isAdmin() || (isSeller() && onlyQuantityChanged());
+      // hiding is done with isActive, never delete
+      allow delete: if false;
+    }
+
+    // purchase price: admin only, hidden from sellers
+    match /productCosts/{productId} {
+      allow read, write: if isAdmin();
+    }
+
+    // ================= sales =================
+    match /sales/{saleId} {
+      // admin reads all sales, a seller reads only their own
+      allow read: if isAdmin()
+        || (isSeller() && resource.data.sellerId == request.auth.uid);
+
+      // any active user records a sale in their own name
+      allow create: if isActiveUser()
+        && request.resource.data.sellerId == request.auth.uid
+        && request.resource.data.status == 'completed';
+
+      // cancel only: completed -> cancelled, touching only the cancel fields
+      allow update: if (isAdmin()
+            || (isSeller() && resource.data.sellerId == request.auth.uid))
+        && resource.data.status == 'completed'
+        && request.resource.data.status == 'cancelled'
+        && request.resource.data.cancelledBy == request.auth.uid
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['status', 'cancelledBy', 'cancelledByName', 'cancelledAt']);
+
+      allow delete: if false;
+    }
+
+    // ================= dailySummaries =================
+    match /dailySummaries/{dateKey} {
+      // only the admin reads summaries
+      allow read: if isAdmin();
+
+      // any active user increments them (sellers never read them)
+      allow create: if isActiveUser()
+        && request.resource.data.keys()
+             .hasOnly(['salesTotal', 'salesCount', 'productsSold', 'revision']);
+      allow update: if isActiveUser()
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['salesTotal', 'salesCount', 'productsSold', 'revision']);
+      allow delete: if false;
+    }
+
+    // ================= profitSummaries =================
+    match /profitSummaries/{dateKey} {
+      allow read, write: if isAdmin();
+    }
+
+  }
+}

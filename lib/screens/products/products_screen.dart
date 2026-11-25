@@ -8,6 +8,7 @@ import '../../models/product.dart';
 import 'edit_product_screen.dart';
 import 'package:provider/provider.dart';
 import '../../providers/settings_provider.dart';
+import '../../utils/format_money.dart';
 
 // Products list screen (isAdmin: true = admin, false = seller)
 class ProductsScreen extends StatefulWidget {
@@ -142,7 +143,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${s.salePrice}: ${p.salePrice} $currency',
+                      '${s.salePrice}: ${formatMoney(p.salePrice, currency)}',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -236,7 +237,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
       floatingActionButton: widget.isAdmin
           ? FloatingActionButton(
               backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Colors.white,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
               onPressed: () {
                 Navigator.push(
                     context,

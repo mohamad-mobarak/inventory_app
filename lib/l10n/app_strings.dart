@@ -23,7 +23,7 @@ class AppStrings {
       : 'Incorrect email or password.';
   String get accountDisabled => locale.languageCode == 'ar'
       ? 'هذا الحساب معطل يرجى التواصل مع المدير'
-      : 'This account is disabled. Plese contact the manager';
+      : 'This account is disabled. Please contact the manager';
   String get accountNotRegistered => locale.languageCode == 'ar'
       ? 'هذا الحساب غير مسجل لدى المحل'
       : 'This account is not registered with this shop';

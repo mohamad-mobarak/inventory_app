@@ -19,3 +19,4 @@ android/local.properties
 .idea/
 *.iml
 .vscode/
+ios/Flutter/ephemeral/

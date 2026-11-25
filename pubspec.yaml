@@ -27,6 +27,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.4
+
 
 flutter:
 
@@ -49,3 +51,18 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+
+  # Configures how the app icons are generated
+flutter_launcher_icons:
+  # Uses the same logo for every icon
+  image_path: "assets/images/app_logo.png"
+  # Replaces the Android launcher icon
+  android: true
+  # Skips iOS, because the app targets Android and web only
+  ios: false
+  # Generates the website icons and the browser tab icon
+  web:
+    generate: true
+    image_path: "assets/images/app_logo.png"
+    background_color: "#0F766E"
+    theme_color: "#0F766E"

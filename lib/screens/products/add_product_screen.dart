@@ -194,13 +194,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
   @override
   Widget build(BuildContext context) {
     final s = AppStrings.of(context);
-    final primary = Theme.of(context).colorScheme.primary;
+    final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
       // Green top bar with the back arrow (added automatically)
       appBar: AppBar(
-        backgroundColor: primary,
-        foregroundColor: Colors.white,
+        backgroundColor: colors.primary,
+        foregroundColor: colors.onPrimary,
         title: Text(s.addNewProduct),
       ),
       body: SingleChildScrollView(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_app/l10n/app_strings.dart';
+import '../../l10n/app_strings.dart';
 import '../products/products_screen.dart';
 import '../sales/sell_screen.dart';
 import '../sellers/sellers_screen.dart';
@@ -38,7 +38,11 @@ class _MainShellState extends State<MainShell> {
           ];
     return Scaffold(
       // Keeps every screen alive and shows only the selected one.
-      body: IndexedStack(index: _currentIndex, children: screens),
+      body: Center(
+          child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 700),
+        child: IndexedStack(index: _currentIndex, children: screens),
+      )),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _currentIndex,
         onDestinationSelected: (index) {
