@@ -44,3 +44,7 @@ It supports two roles, admin and seller, with a dashboard, product management, a
 | Admin  | demo-admin@example.com   | 000111   |
 | Seller | demo-seller@example.com  | 000111   |
 
+
+## Download Android APK
+
+[Download APK](https://github.com/mohamad-mobarak/inventory_app/releases/download/v1.0.0/inventory-app-v1.0.0.apk)
