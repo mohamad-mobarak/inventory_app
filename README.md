@@ -16,6 +16,20 @@ It supports two roles, admin and seller, with a dashboard, product management, a
 - Firebase Authentication and Cloud Firestore for sign-in and data storage.
 - Provider for state management.
 
+
+## Screenshots
+
+<table>
+<tr>
+<td><img width="250" alt="Dashboard" src="https://github.com/user-attachments/assets/e52434f4-4cc7-441d-8072-4dfebc0b4f75" /></td>
+<td><img width="250" alt="Products" src="https://github.com/user-attachments/assets/6b4a779f-80a7-4e4e-bc6a-864089c16c08" /></td>
+</tr>
+<tr>
+<td><img width="250" alt="Sell and cart" src="https://github.com/user-attachments/assets/02c05f10-fb44-4f72-9231-eab1195973d7" /></td>
+<td><img width="250" alt="Sales history" src="https://github.com/user-attachments/assets/595f0f65-bb41-474b-9ae0-d9c21fc2d3b6" /></td>
+</tr>
+</table>
+
 ## Getting Started
 
 1. Clone the repository:
